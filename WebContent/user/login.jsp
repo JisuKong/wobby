@@ -1,78 +1,45 @@
-<%@page contentType="text/html; charset=utf-8" %>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<!DOCTYPE html>
 <html>
-<head>
-<title>ì‚¬ìš©ì ê´€ë¦¬(UserMan3)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel=stylesheet href="<c:url value='/css/user.css' />" type="text/css">
-<script>
-function login() {
-	if (form.userId.value == "") {
-		alert("ì‚¬ìš©ì IDë¥¼ ì…ë ¥í•˜ì‹­ì‹œì˜¤.");
-		form.userId.focus();
-		return false;
-	} 
-	if (form.password.value == "") {
-		alert("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì‹­ì‹œì˜¤.");
-		form.password.focus();
-		return false;
-	}		
-	form.submit();
-}
-
-function userCreate(targetUri) {
-	form.action = targetUri;
-	form.submit();
-}
-</script>
+	<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<!-- Optional JavaScript -->
+	<!-- JS, Popper.js, and jQuery -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+	<title>Login</title>
 </head>
-<body bgcolor=#FFFFFF text=#000000 leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
-<br>
-<!-- login form  -->
-<form name="form" method="POST" action="<c:url value='/user/login' />">
-  <table style="width:100%">
-	<tr>
-	  <td width="20"></td>
-	  <td>
-	    <table>
-		  <tr>
-			<td bgcolor="f4f4f4" height="22">&nbsp;&nbsp;<b>ì‚¬ìš©ì ê´€ë¦¬ - ë¡œê·¸ì¸</b>&nbsp;&nbsp;</td>
-		  </tr>
-	    </table> 
-	    <br>	  
-	    <table style="background-color: YellowGreen">
-	  	  <tr height="40">
-			<td width="150" align="center" bgcolor="E6ECDE">ì‚¬ìš©ì ID</td>
-			<td width="250" bgcolor="ffffff" style="padding-left:10">
-				<input type="text" style="width:240" name="userId">
-			</td>
-		  </tr>
-	  	  <tr height="40">
-			<td width="150" align="center" bgcolor="E6ECDE">ë¹„ë°€ë²ˆí˜¸</td>
-			<td width="250" bgcolor="ffffff" style="padding-left:10">
-				<input type="password" style="width:240" name="password">
-			</td>
-		  </tr>
-	    </table>
-	    <br>	  
-	    <table style="width:100%">
-		  <tr>
-			<td align=left>
-			<input type="button" value="ë¡œê·¸ì¸" onClick="login()"> &nbsp;
-			</td>						
-		  </tr>
-		  <tr height="40"><td>(ê´€ë¦¬ì ë¡œê·¸ì¸: admin/admin)</td></tr>
-	    </table>
-	  </td>	  
-	</tr>
-	<tr height="100"><td>&nbsp;</td>
-	  <td>
-		<a href="http://cs.dongduk.ac.kr">
-		  <img src="<c:url value='/images/logo.gif' />" /></a>		
-	  </td>
-	</tr>
-  </table>  
-</form>
+<body>
+    <div class="col-xs-6 col-sm-4 py-5 container">
+      <form class="form-signin">
+        <h2 class="pb-2 text-center form-signin-heading">Wobby</h2>
+        <label for="inputEmail" class="sr-only">¾ÆÀÌµğ</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="¾ÆÀÌµğ" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">ºñ¹Ğ¹øÈ£</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="ºñ¹Ğ¹øÈ£" required="">
+	    <div class="py-1 row">
+		    <div class="col-md-6 checkbox">
+			  <label>
+			    <input type="checkbox" value="remember-me">
+			    <small> ¾ÆÀÌµğ ±â¾ï</small>
+			  </label>
+	        </div>
+	        <div class="col-md-6">
+	          <a class="text-right" href="FindUserInfo.jsp"><p class="text-right"><small>¾ÆÀÌµğ / ºñ¹Ğ¹øÈ£ Ã£±â</small></p></a>
+	        </div>
+		</div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">·Î±×ÀÎ</button>
+      </form>
+      <div class="pt-1">
+      	<button class="btn btn-lg btn-info btn-block"  onclick="location.href='SignUp.jsp'">°¡ÀÔÇÏ±â</button>
+      </div>
+    </div>
 </body>
 </html>
