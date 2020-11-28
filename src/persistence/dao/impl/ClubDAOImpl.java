@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.apache.catalina.User;
-
 import persistence.dao.ClubDAO;
-import persistence.dao.impl.JDBCUtil;
 import service.dto.ClubDTO;
 import service.dto.UserDTO;
 
@@ -17,19 +14,16 @@ public class ClubDAOImpl implements ClubDAO {
 private JDBCUtil jdbcUtil = null;
 	
 	public ClubDAOImpl() {			
-		jdbcUtil = new JDBCUtil();	// JDBCUtil 媛앹껜 �깮�꽦
+		jdbcUtil = new JDBCUtil();	// JDBCUtil 揶쏆빘猿� 占쎄문占쎄쉐
 	}
-	/**
-	 * Club �뀒�씠釉붿뿉 �깉濡쒖슫 �뻾 �깮�꽦 (PK 媛믪� Sequence瑜� �씠�슜�븯�뿬 �옄�룞 �깮�꽦)
-	 * @return 
-	 */
+	
 	public int createClub(ClubDTO club) {
 		int result = 0;
 		String sql = "INSERT INTO Club (CLUB_ID, CLUBNAME, STARTDATE, REGION, MAXOFMEMBERS, "
 				+ "CHAIR_ID)VALUES (?, ?, ?, SYSDATE, ?, ?, ?)";
 		Object[] param = new Object[] {club.getName(),
 				club.getRegion(), club.getMaxNumMembers(), club.getChairId()};				
-			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil �뿉 insert臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+			jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil 占쎈퓠 insert�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
 			
 
 			int n = club.getCategory().length;
@@ -40,13 +34,13 @@ private JDBCUtil jdbcUtil = null;
 			jdbcUtil.setSqlAndParameters(sql1, parameters);
 			
 			
-			String key[] = {"BOARD_ID"};	// PK 而щ읆紐�
+			String key[] = {"BOARD_ID"};	// PK �뚎됱쓥筌륅옙
 			try {    
-				jdbcUtil.executeUpdate(key);  // insert 臾� �떎�뻾
+				jdbcUtil.executeUpdate(key);  // insert �눧占� 占쎈뼄占쎈뻬
 			   	ResultSet rs = jdbcUtil.getGeneratedKeys();
 			   	if(rs.next()) {
-			   		String generatedKey = rs.getString(1);   // �깮�꽦�맂 PK 媛�
-			   		club.setClubId(generatedKey); 	// id�븘�뱶�뿉 ���옣  
+			   		String generatedKey = rs.getString(1);   // 占쎄문占쎄쉐占쎈쭆 PK 揶쏉옙
+			   		club.setClubId(generatedKey); 	// id占쎈툡占쎈굡占쎈퓠 占쏙옙占쎌삢  
 			   	}
 			   	return result;
 			} catch (Exception ex) {
@@ -54,13 +48,13 @@ private JDBCUtil jdbcUtil = null;
 				ex.printStackTrace();
 			} finally {		
 				jdbcUtil.commit();
-				jdbcUtil.close();	// resource 諛섑솚
+				jdbcUtil.close();	// resource 獄쏆꼹�넎
 			}		
 			return 0;
 	}
 	
 	/**
-	 * �겢�읇�뿉 媛��엯
+	 * 占쎄깻占쎌쓦占쎈퓠 揶쏉옙占쎌뿯
 	 */
 	public int insertUser(String userId, String clubId){
 		String sql = "UPDATE USERINFO "
@@ -69,7 +63,7 @@ private JDBCUtil jdbcUtil = null;
 			
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId, userId});	
 		try {				
-			int result = jdbcUtil.executeUpdate();	// update 臾� �떎�뻾
+			int result = jdbcUtil.executeUpdate();	// update �눧占� 占쎈뼄占쎈뻬
 			return result;
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
@@ -77,13 +71,13 @@ private JDBCUtil jdbcUtil = null;
 		}
 		finally {
 			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 諛섑솚
+			jdbcUtil.close();	// resource 獄쏆꼹�넎
 		}		
 		return 0;
 	}
 	
 	/**
-	 * �겢�읇 �궗�슜�옄 �궘�젣
+	 * 占쎄깻占쎌쓦 占쎄텢占쎌뒠占쎌쁽 占쎄텣占쎌젫
 	 */
 	public int removeUser(String userId, String clubId){
 		String sql = "DELETE FROM USERINFO "
@@ -91,7 +85,7 @@ private JDBCUtil jdbcUtil = null;
 			
 		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId, userId});	
 		try {				
-			int result = jdbcUtil.executeUpdate();	// update 臾� �떎�뻾
+			int result = jdbcUtil.executeUpdate();	// update �눧占� 占쎈뼄占쎈뻬
 			return result;
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
@@ -99,22 +93,42 @@ private JDBCUtil jdbcUtil = null;
 		}
 		finally {
 			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 諛섑솚
+			jdbcUtil.close();	// resource 獄쏆꼹�넎
 		}		
 		return 0;
 	}
 	/**
-	 * 湲곗〈�쓽 Club �젙蹂대�� �닔�젙
+	 * 疫꿸퀣�덌옙�벥 Club 占쎌젟癰귣�占쏙옙 占쎈땾占쎌젟
 	 */
 	public int update(ClubDTO club) {
+        String sql = "UPDATE CLUB "
+                + "SET CLUBNAME = ?, MBTI = ? "
+                + "WHERE CLUB_ID = ?";
+        Object[] param = new Object[] { club.getName(), club.getMbti(), club.getClubId() };
+        jdbcUtil.setSqlAndParameters(sql, param); 
+        
+        try {               
+            int result = jdbcUtil.executeUpdate();  // update �눧占� 占쎈뼄占쎈뻬
+            return result;
+        } catch (Exception ex) {
+            jdbcUtil.rollback();
+            ex.printStackTrace();
+        }
+        finally {
+            jdbcUtil.commit();
+            jdbcUtil.close();   // resource 獄쏆꼹�넎
+        }       
+        return 0;
+        
+        /*
 		String sql = "UPDATE Club "
-				+ "SET REGION=?, CHARI_ID=? "
+				+ "SET REGION=?, CHAIR_ID=? "
 				+ "WHERE CLUB_ID = ?";
 
 		
 		Object[] param = new Object[] { club.getRegion(), 
 				club.getChairId(), club.getClubId()};				
-		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil�뿉 update臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil占쎈퓠 update�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
 			
 		
 		int n = club.getCategory().length;
@@ -125,7 +139,7 @@ private JDBCUtil jdbcUtil = null;
 		jdbcUtil.setSqlAndParameters(sql1, parameters);
 		
 		try {				
-			int result = jdbcUtil.executeUpdate();	// update 臾� �떎�뻾
+			int result = jdbcUtil.executeUpdate();	// update �눧占� 占쎈뼄占쎈뻬
 			return result;
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
@@ -133,23 +147,23 @@ private JDBCUtil jdbcUtil = null;
 		}
 		finally {
 			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 諛섑솚
+			jdbcUtil.close();	// resource 獄쏆꼹�넎
 		}		
-		return 0;
+		return 0;*/
 	}
 	
 	/**
-	 * �겢�읇�쓽 �쉶�옣�쓣 蹂�寃�  
+	 * 占쎄깻占쎌쓦占쎌벥 占쎌돳占쎌삢占쎌뱽 癰귨옙野껓옙  
 	 */
 	public int updateChair(ClubDTO club) {		
 		String sql = "UPDATE CLUB "
 				+ "SET CHAIR_ID= ? "
 				+ "WHERE CLUB_ID=?";
 		Object[] param = new Object[] {club.getChairId(), club.getClubId()};				
-		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil�뿉 update臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+		jdbcUtil.setSqlAndParameters(sql, param);	// JDBCUtil占쎈퓠 update�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
 			
 		try {				
-			int result = jdbcUtil.executeUpdate();	// update 臾� �떎�뻾
+			int result = jdbcUtil.executeUpdate();	// update �눧占� 占쎈뼄占쎈뻬
 			return result;
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
@@ -157,20 +171,20 @@ private JDBCUtil jdbcUtil = null;
 		}
 		finally {
 			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 諛섑솚
+			jdbcUtil.close();	// resource 獄쏆꼹�넎
 		}		
 		return 0;
 	}
 	
 	/**
-	 * �겢�읇 ID�뿉 �빐�떦�븯�뒗 �겢�읇 �젙蹂대�� �궘�젣.
+	 * 占쎄깻占쎌쓦 ID占쎈퓠 占쎈퉸占쎈뼣占쎈릭占쎈뮉 占쎄깻占쎌쓦 占쎌젟癰귣�占쏙옙 占쎄텣占쎌젫.
 	 */
 	public int delete(String clubId) {
 		String sql = "DELETE FROM CLUB WHERE CLUB_ID=?";		
-		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId});	// JDBCUtil�뿉 delete臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId});	// JDBCUtil占쎈퓠 delete�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
 
 		try {				
-			int result = jdbcUtil.executeUpdate();	// delete 臾� �떎�뻾
+			int result = jdbcUtil.executeUpdate();	// delete �눧占� 占쎈뼄占쎈뻬
 			return result;
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
@@ -178,23 +192,23 @@ private JDBCUtil jdbcUtil = null;
 		}
 		finally {
 			jdbcUtil.commit();
-			jdbcUtil.close();	// resource 諛섑솚
+			jdbcUtil.close();	// resource 獄쏆꼹�넎
 		}		
 		return 0;
 	}
 	
-	/* 吏��뿭 留ㅼ묶*/ 
+	/* 筌욑옙占쎈열 筌띲끉臾�*/ 
 	public ClubDTO regionMatching(UserDTO user) {
 		String sql = "SELECT c.CLUB_ID AS ID, CLUBNAME, STARTDATE, CHAIR_ID, c.REGION AS CLUB_REGION "
     			+ "FROM Club c LEFT OUTER JOIN User u ON c.region = u.region "
     			+ "WHERE u.USER_ID = ?";    			
-	   jdbcUtil.setSqlAndParameters(sql, new Object[] {user.getUserId()});	// JDBCUtil�뿉 query臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
-	   																		// 紐낆� UserDTO 異붽��븯硫� �맖.
+	   jdbcUtil.setSqlAndParameters(sql, new Object[] {user.getUserId()});	// JDBCUtil占쎈퓠 query�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
+	   																		// 筌뤿굞占� UserDTO �빊遺쏙옙占쎈릭筌롳옙 占쎈쭡.
 		ClubDTO club = null;
 		try {
-			ResultSet rs = jdbcUtil.executeQuery();		// query �떎�뻾
+			ResultSet rs = jdbcUtil.executeQuery();		// query 占쎈뼄占쎈뻬
 			if (rs.next()) {					
-				club = new ClubDTO(		// Club 媛앹껜瑜� �깮�꽦�븯�뿬 而ㅻ�ㅻ땲�떚 �젙蹂대�� ���옣
+				club = new ClubDTO(		// Club 揶쏆빘猿쒐몴占� 占쎄문占쎄쉐占쎈릭占쎈연 �뚣끇占썬끇�빍占쎈뼒 占쎌젟癰귣�占쏙옙 占쏙옙占쎌삢
 					rs.getString("ID"),
 					rs.getString("CLUBNAME"),			
 					rs.getDate("STARTDATE"),
@@ -204,43 +218,44 @@ private JDBCUtil jdbcUtil = null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			jdbcUtil.close();		// resource 諛섑솚
+			jdbcUtil.close();		// resource 獄쏆꼹�넎
 		}
 		return club;
 	}
 	
 	/**
-	 * 二쇱뼱吏�  �겢�읇ID�뿉 �빐�떦�븯�뒗 �겢�읇 �젙蹂대�� �뜲�씠�꽣踰좎씠�뒪�뿉�꽌 李얠븘 Club �룄硫붿씤 �겢�옒�뒪�뿉 
-	 * ���옣�븯�뿬 諛섑솚.
+	 * 雅뚯눘堉깍쭪占�  占쎄깻占쎌쓦ID占쎈퓠 占쎈퉸占쎈뼣占쎈릭占쎈뮉 占쎄깻占쎌쓦 占쎌젟癰귣�占쏙옙 占쎈쑓占쎌뵠占쎄숲甕곗쥙�뵠占쎈뮞占쎈퓠占쎄퐣 筌≪뼚釉� Club 占쎈즲筌롫뗄�뵥 占쎄깻占쎌삋占쎈뮞占쎈퓠 
+	 * 占쏙옙占쎌삢占쎈릭占쎈연 獄쏆꼹�넎.
 	 */
 	public ClubDTO findClub(String clubId) {
-		String sql = "SELECT c.CLUB_ID , CLUBNAME,  STARTDATE, NUMOFMEMBERS ,CHAIR_ID, u.name As chairName, POPULARITY "
-    			+ "FROM Club c LEFT OUTER JOIN User u ON c.CLUB_ID = u.CLUB_ID  "
+		String sql = "SELECT c.CLUB_ID AS ID, CLUBNAME,  STARTDATE, CHAIR_ID, u.name As chairName, POPUALRITY, c.MBTI AS MBTI "
+    			+ "FROM Club c LEFT OUTER JOIN USERINFO u ON c.CHAIR_ID = u.USER_ID  "
     			+ "WHERE c.CLUB_ID=? ";              
-		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId});	// JDBCUtil�뿉 query臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId});	// JDBCUtil占쎈퓠 query�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
 		ClubDTO club = null;
 		try {
-			ResultSet rs = jdbcUtil.executeQuery();		// query �떎�뻾
-			if (rs.next()) {					
-				club = new ClubDTO(		// Club 媛앹껜瑜� �깮�꽦�븯�뿬 而ㅻ�ㅻ땲�떚 �젙蹂대�� ���옣
-						clubId,
-					rs.getString("CLUBNAME"),
-					rs.getString("CHAIR_ID"),
-					rs.getInt("NUMOFMEMBERS"),
-					rs.getDate("STARTDATE"),
-					rs.getString("chairName"),
-					rs.getString("POPULARITY"));
+			ResultSet rs = jdbcUtil.executeQuery();		// query 占쎈뼄占쎈뻬
+			if (rs.next()) {
+                System.out.println(rs.getString("ID"));
+                club = new ClubDTO();
+                club.setClubId(rs.getString("ID"));
+                club.setName(rs.getString("CLUBNAME"));
+                club.setChairId(rs.getString("CHAIR_ID"));
+                club.setChairName(rs.getString("chairName"));
+                club.setStartDate(rs.getDate("STARTDATE"));
+                club.setPopularity(rs.getString("POPUALRITY"));
+                club.setMbti(rs.getString("MBTI"));
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			jdbcUtil.close();		// resource 諛섑솚
+			jdbcUtil.close();		// resource 獄쏆꼹�넎
 		}
 		return club;
 	}
 	
 	/**
-	 * �쟾泥� �겢�읇 �젙蹂대�� 寃��깋�븯�뿬 List�뿉 ���옣 諛� 諛섑솚
+	 * 占쎌읈筌ｏ옙 占쎄깻占쎌쓦 占쎌젟癰귣�占쏙옙 野껓옙占쎄퉳占쎈릭占쎈연 List占쎈퓠 占쏙옙占쎌삢 獄쏉옙 獄쏆꼹�넎
 	 */
 	public List<ClubDTO> findClubList() {
 		String sql = "SELECT C.CLUB_ID AS ID, CLUBNAME, STARTDATE, CHAIR_ID, u.name As chairName, "
@@ -248,13 +263,13 @@ private JDBCUtil jdbcUtil = null;
    		   + "FROM Club c LEFT OUTER JOIN USERINFO u ON c.CHAIR_ID = u.USER_ID  "
    		   + "GROUP BY C.CLUB_ID, CLUBNAME, STARTDATE, CHAIR_ID, c.POPUALRITY, u.name, POPUALRITY "
    		   + "ORDER BY CLUBNAME";        
-		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil�뿉 query臾� �꽕�젙
+		jdbcUtil.setSqlAndParameters(sql, null);		// JDBCUtil占쎈퓠 query�눧占� 占쎄퐬占쎌젟
 					
 		try {
-			ResultSet rs = jdbcUtil.executeQuery();			// query �떎�뻾			
-			List<ClubDTO> clubList = new ArrayList<ClubDTO>();	// Community�뱾�쓽 由ъ뒪�듃 �깮�꽦
+			ResultSet rs = jdbcUtil.executeQuery();			// query 占쎈뼄占쎈뻬			
+			List<ClubDTO> clubList = new ArrayList<ClubDTO>();	// Community占쎈굶占쎌벥 �뵳�딅뮞占쎈뱜 占쎄문占쎄쉐
 			while (rs.next()) {
-				ClubDTO club = new ClubDTO(			// Community 媛앹껜瑜� �깮�꽦�븯�뿬 �쁽�옱 �뻾�쓽 �젙蹂대�� ���옣
+				ClubDTO club = new ClubDTO(			// Community 揶쏆빘猿쒐몴占� 占쎄문占쎄쉐占쎈릭占쎈연 占쎌겱占쎌삺 占쎈뻬占쎌벥 占쎌젟癰귣�占쏙옙 占쏙옙占쎌삢
 						rs.getString("ID"),
 						rs.getString("CLUBNAME"),
 						rs.getString("CHAIR_ID"),
@@ -262,27 +277,27 @@ private JDBCUtil jdbcUtil = null;
 						rs.getDate("STARTDATE"),
 						rs.getString("chairName"),
 						rs.getString("POPUALRITY"));
-				clubList.add(club);				// List�뿉 Community 媛앹껜 ���옣
+				clubList.add(club);				// List占쎈퓠 Community 揶쏆빘猿� 占쏙옙占쎌삢
 			}		
 			return clubList;					
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			jdbcUtil.close();		// resource 諛섑솚
+			jdbcUtil.close();		// resource 獄쏆꼹�넎
 		}
 		return null;
 	}
 	
 	/**
-	 * 二쇱뼱吏�  �겢�읇ID�뿉 �빐�떦�븯�뒗 �겢�읇�씠 議댁옱�븯�뒗吏� 寃��궗 
+	 * 雅뚯눘堉깍쭪占�  占쎄깻占쎌쓦ID占쎈퓠 占쎈퉸占쎈뼣占쎈릭占쎈뮉 占쎄깻占쎌쓦占쎌뵠 鈺곕똻�삺占쎈릭占쎈뮉筌욑옙 野껓옙占쎄텢 
 	 */
 	public boolean existingClub(String clubId) {
 		String sql = "SELECT count(*) FROM Club WHERE CLUB_ID=?";      
-		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId});	// JDBCUtil�뿉 query臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+		jdbcUtil.setSqlAndParameters(sql, new Object[] {clubId});	// JDBCUtil占쎈퓠 query�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
 
 		try {
-			ResultSet rs = jdbcUtil.executeQuery();		// query �떎�뻾
+			ResultSet rs = jdbcUtil.executeQuery();		// query 占쎈뼄占쎈뻬
 			if (rs.next()) {
 				int count = rs.getInt(1);
 				return (count == 1 ? true : false);
@@ -290,7 +305,7 @@ private JDBCUtil jdbcUtil = null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			jdbcUtil.close();		// resource 諛섑솚
+			jdbcUtil.close();		// resource 獄쏆꼹�넎
 		}
 		return false;
 	}
@@ -302,13 +317,13 @@ private JDBCUtil jdbcUtil = null;
                 + "WHERE C.CLUBNAME LIKE '%'||?||'%' "
                 + "GROUP BY C.CLUB_ID, CLUBNAME, STARTDATE, CHAIR_ID, c.POPUALRITY, u.name, POPUALRITY "
                 + "ORDER BY CLUBNAME";        
-            jdbcUtil.setSqlAndParameters(sql, new Object[] {keyword});   // JDBCUtil�뿉 query臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+            jdbcUtil.setSqlAndParameters(sql, new Object[] {keyword});   // JDBCUtil占쎈퓠 query�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
                          
              try {
-                 ResultSet rs = jdbcUtil.executeQuery();         // query �떎�뻾           
-                 List<ClubDTO> clubList = new ArrayList<ClubDTO>();  // Community�뱾�쓽 由ъ뒪�듃 �깮�꽦
+                 ResultSet rs = jdbcUtil.executeQuery();         // query 占쎈뼄占쎈뻬           
+                 List<ClubDTO> clubList = new ArrayList<ClubDTO>();  // Community占쎈굶占쎌벥 �뵳�딅뮞占쎈뱜 占쎄문占쎄쉐
                  while (rs.next()) {
-                     ClubDTO club = new ClubDTO(         // Community 媛앹껜瑜� �깮�꽦�븯�뿬 �쁽�옱 �뻾�쓽 �젙蹂대�� ���옣
+                     ClubDTO club = new ClubDTO(         // Community 揶쏆빘猿쒐몴占� 占쎄문占쎄쉐占쎈릭占쎈연 占쎌겱占쎌삺 占쎈뻬占쎌벥 占쎌젟癰귣�占쏙옙 占쏙옙占쎌삢
                              rs.getString("ID"),
                              rs.getString("CLUBNAME"),
                              rs.getString("CHAIR_ID"),
@@ -316,47 +331,49 @@ private JDBCUtil jdbcUtil = null;
                              rs.getDate("STARTDATE"),
                              rs.getString("chairName"),
                              rs.getString("POPUALRITY"));
-                     clubList.add(club);             // List�뿉 Community 媛앹껜 ���옣
+                     clubList.add(club);             // List占쎈퓠 Community 揶쏆빘猿� 占쏙옙占쎌삢
                  }       
                  return clubList;                    
                  
              } catch (Exception ex) {
                  ex.printStackTrace();
              } finally {
-                 jdbcUtil.close();       // resource 諛섑솚
+                 jdbcUtil.close();       // resource 獄쏆꼹�넎
              }
              return null;
     }
 	
     public List<ClubDTO> findClubListbyMBTI(String mbti){
+        System.out.println(mbti);
         String sql = "SELECT C.CLUB_ID AS ID, CLUBNAME, STARTDATE, CHAIR_ID, u.name As chairName, "
-                + "COUNT(u.USER_ID) AS NUMOFMEMBERS, POPUALRITY "
-                + "FROM Club c LEFT OUTER JOIN USERINFO u ON c.CHAIR_ID = u.USER_ID  "
+                //+ "COUNT(u.USER_ID) AS NUMOFMEMBERS, "
+                + "POPUALRITY "
+                + "FROM CLUB c LEFT OUTER JOIN USERINFO u ON c.CHAIR_ID = u.USER_ID  "
                 + "WHERE C.MBTI = ?  "
-                + "GROUP BY C.CLUB_ID, CLUBNAME, STARTDATE, CHAIR_ID, c.POPUALRITY, u.name, POPUALRITY "
-                + "ORDER BY CLUBNAME";        
-            jdbcUtil.setSqlAndParameters(sql, new Object[] {mbti});   // JDBCUtil�뿉 query臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
-                         
+                + "GROUP BY C.CLUB_ID, CLUBNAME, STARTDATE, CHAIR_ID, u.name, POPUALRITY "
+                + "ORDER BY CLUBNAME";  
+            jdbcUtil.setSqlAndParameters(sql, new Object[] {mbti});   // JDBCUtil占쎈퓠 query�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
+
              try {
-                 ResultSet rs = jdbcUtil.executeQuery();         // query �떎�뻾           
-                 List<ClubDTO> clubList = new ArrayList<ClubDTO>();  // Community�뱾�쓽 由ъ뒪�듃 �깮�꽦
+                 ResultSet rs = jdbcUtil.executeQuery();         // query 占쎈뼄占쎈뻬           
+                 List<ClubDTO> clubList = new ArrayList<ClubDTO>();  // Community占쎈굶占쎌벥 �뵳�딅뮞占쎈뱜 占쎄문占쎄쉐
                  while (rs.next()) {
-                     ClubDTO club = new ClubDTO(         // Community 媛앹껜瑜� �깮�꽦�븯�뿬 �쁽�옱 �뻾�쓽 �젙蹂대�� ���옣
-                             rs.getString("ID"),
-                             rs.getString("CLUBNAME"),
-                             rs.getString("CHAIR_ID"),
-                             rs.getInt("NUMOFMEMBERS"),
-                             rs.getDate("STARTDATE"),
-                             rs.getString("chairName"),
-                             rs.getString("POPUALRITY"));
-                     clubList.add(club);             // List�뿉 Community 媛앹껜 ���옣
+                     System.out.println(rs.getString("ID"));
+                     ClubDTO club = new ClubDTO();
+                     club.setClubId(rs.getString("ID"));
+                     club.setName(rs.getString("CLUBNAME"));
+                     club.setChairId(rs.getString("CHAIR_ID"));
+                     club.setChairName(rs.getString("chairName"));
+                     //club.setNumOfMembers(rs.getInt("NUMOFMEMBERS"));
+                     club.setStartDate(rs.getDate("STARTDATE"));
+                     club.setPopularity(rs.getString("POPUALRITY"));
+                     clubList.add(club);             // List占쎈퓠 Community 揶쏆빘猿� 占쏙옙占쎌삢
                  }       
-                 return clubList;                    
-                 
+                 return clubList;
              } catch (Exception ex) {
                  ex.printStackTrace();
              } finally {
-                 jdbcUtil.close();       // resource 諛섑솚
+                 jdbcUtil.close();       // resource 獄쏆꼹�넎
              }
              return null;
     }
@@ -369,13 +386,13 @@ private JDBCUtil jdbcUtil = null;
                 + "WHERE C.REGION = ?  "
                 + "GROUP BY C.CLUB_ID, CLUBNAME, STARTDATE, CHAIR_ID, c.POPUALRITY, u.name, POPUALRITY "
                 + "ORDER BY CLUBNAME";        
-            jdbcUtil.setSqlAndParameters(sql, new Object[] {region});   // JDBCUtil�뿉 query臾멸낵 留ㅺ컻 蹂��닔 �꽕�젙
+            jdbcUtil.setSqlAndParameters(sql, new Object[] {region});   // JDBCUtil占쎈퓠 query�눧硫몃궢 筌띲끆而� 癰귨옙占쎈땾 占쎄퐬占쎌젟
                          
              try {
-                 ResultSet rs = jdbcUtil.executeQuery();         // query �떎�뻾           
-                 List<ClubDTO> clubList = new ArrayList<ClubDTO>();  // Community�뱾�쓽 由ъ뒪�듃 �깮�꽦
+                 ResultSet rs = jdbcUtil.executeQuery();         // query 占쎈뼄占쎈뻬           
+                 List<ClubDTO> clubList = new ArrayList<ClubDTO>();  // Community占쎈굶占쎌벥 �뵳�딅뮞占쎈뱜 占쎄문占쎄쉐
                  while (rs.next()) {
-                     ClubDTO club = new ClubDTO(         // Community 媛앹껜瑜� �깮�꽦�븯�뿬 �쁽�옱 �뻾�쓽 �젙蹂대�� ���옣
+                     ClubDTO club = new ClubDTO(         // Community 揶쏆빘猿쒐몴占� 占쎄문占쎄쉐占쎈릭占쎈연 占쎌겱占쎌삺 占쎈뻬占쎌벥 占쎌젟癰귣�占쏙옙 占쏙옙占쎌삢
                              rs.getString("ID"),
                              rs.getString("CLUBNAME"),
                              rs.getString("CHAIR_ID"),
@@ -383,14 +400,14 @@ private JDBCUtil jdbcUtil = null;
                              rs.getDate("STARTDATE"),
                              rs.getString("chairName"),
                              rs.getString("POPUALRITY"));
-                     clubList.add(club);             // List�뿉 Community 媛앹껜 ���옣
+                     clubList.add(club);             // List占쎈퓠 Community 揶쏆빘猿� 占쏙옙占쎌삢
                  }       
                  return clubList;                    
                  
              } catch (Exception ex) {
                  ex.printStackTrace();
              } finally {
-                 jdbcUtil.close();       // resource 諛섑솚
+                 jdbcUtil.close();       // resource 獄쏆꼹�넎
              }
              return null;
     }

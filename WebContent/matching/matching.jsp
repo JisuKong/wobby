@@ -1,15 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-  <meta charset="utf-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Optional JavaScript -->
+<!-- JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <title>Matching</title>
 
   <!-- Bootstrap core CSS -->
@@ -55,7 +62,7 @@
     <div class="container h-100">
       <div class="row h-100 align-items-center">
         <div class="col-lg-12">
-          <h1 class="display-4 text-white mt-5 mb-2">Business Name or Tagline</h1>
+          <h1 class="display-4 text-white mt-5 mb-2">Matiching</h1>
           <p class="lead mb-5 text-white-50">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non possimus ab labore provident mollitia. Id assumenda voluptate earum corporis facere quibusdam quisquam iste ipsa cumque unde nisi, totam quas ipsam.</p>
         </div>
       </div>
@@ -76,12 +83,12 @@
           <img class="card-img-top" src="https://placehold.it/300x200" alt="">
           <div class="card-body">
             <h4 class="card-title">MBTI</h4>
-            <p class="card-text">¼ºÇâ ¸ÅÄª</p>
+            <p class="card-text">ì„±í–¥ ë§¤ì¹­</p>
           </div>
           <div class="card-footer">
             <a href="<c:url value='/matching'>
 						      <c:param name='type' value='mbti'/>
-						   </c:url>" class="btn btn-primary">ÃßÃµ ¹Ş±â</a>
+						   </c:url>" class="btn btn-primary">ì¶”ì²œ ë°›ê¸°</a>
           </div>
         </div>
       </div>
@@ -90,12 +97,12 @@
           <img class="card-img-top" src="https://placehold.it/300x200" alt="">
           <div class="card-body">
             <h4 class="card-title">REGION</h4>
-            <p class="card-text">Áö¿ª ¸ÅÄª </p>
+            <p class="card-text">ì§€ì—­ ë§¤ì¹­ </p>
           </div>
           <div class="card-footer">
             <a href="<c:url value='/matching'>
 						      <c:param name='type' value='region'/>
-						   </c:url>" class="btn btn-primary">ÃßÃµ ¹Ş±â</a>
+						   </c:url>" class="btn btn-primary">ì¶”ì²œ ë°›ê¸°</a>
           </div>
         </div>
       </div>
@@ -104,12 +111,12 @@
           <img class="card-img-top" src="https://placehold.it/300x200" alt="">
           <div class="card-body">
             <h4 class="card-title">EXPERT</h4>
-            <p class="card-text">Àü¹®°¡ ¸ÅÄª</p>
+            <p class="card-text">ì „ë¬¸ê°€ ë§¤ì¹­</p>
           </div>
           <div class="card-footer">
             <a href="<c:url value='/matching'>
 						      <c:param name='type' value='expert'/>
-						   </c:url>" class="btn btn-primary">ÃßÃµ ¹Ş±â</a>
+						   </c:url>" class="btn btn-primary">ì¶”ì²œ ë°›ê¸°</a>
           </div>
         </div>
       </div>
@@ -118,22 +125,22 @@
     <div class="row">
       <div class="col-md-8 mb-5">
      
-        <h2>½Ç½Ã°£ ÀÎ±âCLUB</h2>
+        <h2>ì‹¤ì‹œê°„ ì¸ê¸°CLUB</h2>
         <hr>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
-        <a class="btn btn-primary btn-lg" href="#">´õ ¾Ë¾Æº¸±â &raquo;</a>
+        <a class="btn btn-primary btn-lg" href="#">ë” ì•Œì•„ë³´ê¸° &raquo;</a>
       </div>
     </div>
     
     <div class="row">
       <div class="col-md-8 mb-5">
      
-        <h2>½Ç½Ã°£ ÀÎ±âÃë¹Ì</h2>
+        <h2>ì‹¤ì‹œê°„ ì¸ê¸°ì·¨ë¯¸</h2>
         <hr>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
-        <a class="btn btn-primary btn-lg" href="#">´õ ¾Ë¾Æº¸±â &raquo;</a>
+        <a class="btn btn-primary btn-lg" href="#">ë” ì•Œì•„ë³´ê¸° &raquo;</a>
       </div>
     </div>
 

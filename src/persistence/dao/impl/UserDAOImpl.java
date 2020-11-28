@@ -188,7 +188,7 @@ public class UserDAOImpl implements UserDAO {
 	 * 占쏙옙체 占쏙옙占쏙옙占� 占쏙옙占쏙옙占쏙옙 占싯삼옙占싹울옙 List占쏙옙 占쏙옙占쏙옙 占쏙옙 占쏙옙환
 	 */
 	public List<UserDTO> findUserList() {
-		String sql = "SELECT USER_ID, PW, EMAIL, PHONE, REGISTERDATE, AGE, u.REGION AS REGION, JOB, u.MBTI AS MBTI, u.CLUB_ID AS CLUB_ID, NICKNAME "
+		String sql = "SELECT USER_ID, PW, NAME, EMAIL, PHONE, REGISTERDATE, AGE, u.REGION AS REGION, JOB, u.MBTI AS MBTI, u.CLUB_ID AS CLUB_ID, NICKNAME "
 				+ "FROM USERINFO u LEFT OUTER JOIN Club c ON u.club_id = c.club_Id " + "ORDER BY user_Id";
 		jdbcUtil.setSqlAndParameters(sql, null); // JDBCUtil占쏙옙 query占쏙옙 占쏙옙占쏙옙
 

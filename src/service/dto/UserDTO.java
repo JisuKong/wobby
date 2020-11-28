@@ -112,6 +112,9 @@ public class UserDTO {
         return this.userId.equals(userid);
     }
 	
-
-	
+	@Override
+	public String toString() {
+        return "User [userId / password / name / email / phone / registDate / age / region / job / mbti / clubId / nickname]\n"
+                + userId + password + name + email + phone + registDate + age + region + job + mbti + clubId + nickname;
+    }
 }

@@ -21,11 +21,9 @@ public class LoginController implements Controller {
                 System.out.println(result);
                 
                 HttpSession session = request.getSession();
-                session.setAttribute(UserSessionUtils.USER_SESSION_KEY, userId);
-                
-            	request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));		
+                session.setAttribute(UserSessionUtils.USER_SESSION_KEY, userId);	
               
-            	return "/user/wobbyHome_login.jsp";            
+            	return "redirect:/home";            
             } catch (Exception e) {
                 request.setAttribute("loginFailed", true);
                 request.setAttribute("exception", new IllegalStateException("가입하지 않은 아이디이거나, 잘못된 비밀번호입니다."));

@@ -23,7 +23,7 @@ public class UpdatePwController implements Controller {
                   return "/user/findPwSuccess.jsp";
               }
               
-              manager.updatePw(userId, inputPw);    //  사용자id 정보 검색
+              manager.updatePw(userId, inputPw);
               request.setAttribute("pwUpdated", true);
               return "/user/login/form";
           }                

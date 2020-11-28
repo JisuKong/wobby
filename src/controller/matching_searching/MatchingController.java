@@ -28,24 +28,42 @@ public class MatchingController implements Controller{
 	        }
             String userId = UserSessionUtils.getLoginUserId(session);
 	    	String type = request.getParameter("type");
+            System.out.println(userId + " / " + type);
 
             CommunityManager commMan = CommunityManager.getInstance();
             UserManager userMan = UserManager.getInstance();
             UserDTO user = userMan.findUser(userId);
+            user.setMbti("intp");
 	    	
 	    	if (type.equals("mbti")) {
 	        	String mbti = user.getMbti();
-	        	List<ClubDTO> clubList = (List<ClubDTO>) commMan.findClubListbyMBTI(mbti); //입력받은 keyword로 club 검색
+	        	System.out.println(mbti);
+                List<ClubDTO> clubList = null;
+	        	clubList = commMan.findClubListbyMBTI(mbti); //입력받은 keyword로 club 검색
 	        	request.setAttribute("clubList", clubList);	
 	        	
-	            return "/matching/result.jsp";
+	        	/*test*/
+	        	for(ClubDTO club : clubList) {
+	        	    System.out.println(club.getName());
+	        	}
+                return "/matching/matching.jsp";
+                
+                /*original Code*/
+	            //return "/matching/result.jsp";
 	    	}
 	    	else if (type.equals("region")) {
                 String region = user.getRegion();
                 List<ClubDTO> clubList = (List<ClubDTO>) commMan.findClubListbyRegion(region); //입력받은 keyword로 club 검색
                 request.setAttribute("clubList", clubList); 
 
-                return "/matching/result.jsp";
+                /*test*/
+                for(ClubDTO club : clubList) {
+                    System.out.println(club.getName());
+                }
+                return "/matchin.jsp";
+                
+                /*original Code*/
+                //return "/matching/result.jsp";
             }
 	    	else {
 	            return "/matching.jsp";

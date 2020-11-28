@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/persistence/dao/impl/ClubDAOImpl.java=UTF-8
 encoding//src/persistence/dao/impl/UserDAOImpl.java=UTF-8
+encoding//src/service/CommunityManager.java=UTF-8
 encoding//src/service/UserManager.java=UTF-8
