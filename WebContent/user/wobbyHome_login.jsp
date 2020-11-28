@@ -40,6 +40,8 @@
 						href="user/myPage.jsp">My page</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="club/clubHome.jsp">Club</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="<c:url value='/user/logout'/>">LogOut</a></li>
 				</ul>
 			</div>
 		</div>
