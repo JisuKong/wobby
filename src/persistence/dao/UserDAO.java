@@ -12,4 +12,6 @@ public interface UserDAO {
 	public List<UserDTO> findUserList();				// 전체 유저 정보를 획득 
 	public List<UserDTO> findUsersInClub(int clubId);//특정 클럽에 속한 유저 정보 획득
 	public boolean existingUser(String userId); 	//존재하는 유저 여부 확인
+    public String findId(String email);
+    public int updatePw(String userId, String password);
 }

@@ -43,6 +43,13 @@
 	<div class="col-xs-6 col-sm-4 py-5 container">
 		<form class="form-login" method="POST" action="<c:url value='/user/login' />">
 			<h2 class="pb-2 text-center form-signin-heading">Wobby</h2>
+				<!-- 비밀번호 찾기를 통해 온 경우 exception 객체에 저장된 오류 메시지를 출력 -->
+					<div class="col-lg-12">
+						<c:if test="${pwUpdated}">
+							<h6 class="text-success">비밀번호가 정상적으로 변경되었습니다.
+								<br>변경된 비밀번호로 다시 로그인해주세요.</h6>
+						</c:if>
+					</div>	 
 			<label for="inputEmail" class="sr-only">아이디</label> 
 			<input	type="text" id="inputEmail" class="form-control" placeholder="아이디" name="userId" required autofocus> 
 			<label for="inputPassword" class="sr-only"> 비밀번호 </label> 
@@ -55,13 +62,19 @@
 				</div>
 				<div class="col-md-6">
 					<p class="text-right">
-						<a class="text-right" href="user/findUserInfo.jsp"> <small>아이디
+						<a class="text-right" href="<c:url value='/user/findUserInfoForm.jsp'/>"> <small>아이디
 								/ 비밀번호 찾기</small>
 						</a>
 					</p>
 				</div>
 			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+				<!-- 실패한 경우 exception 객체에 저장된 오류 메시지를 출력 -->
+					<div class="col-lg-12">
+						<c:if test="${loginFailed}">
+							<h6 class="text-danger"><c:out value="${exception.getMessage()}"/></h6>
+						</c:if>
+					</div>	 
+			<button class="btn btn-lg btn-primary btn-block" onClick="login()">로그인</button>
 		</form>
 		<div class="pt-1">
 			<button class="btn btn-lg btn-info btn-block"

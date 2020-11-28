@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 
 import controller.Controller;
 import service.UserManager;
-import service.dto.UserDTO;
 
 public class LoginController implements Controller {
     
@@ -15,9 +14,6 @@ public class LoginController implements Controller {
             String userId = request.getParameter("userId");
             String password = request.getParameter("password");
             try {
-           
-            
-                // ï¿½ðµ¨¿ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 UserManager manager = UserManager.getInstance();
                 
                 System.out.println(userId + " / " + password);
@@ -31,12 +27,8 @@ public class LoginController implements Controller {
               
             	return "/user/wobbyHome_login.jsp";            
             } catch (Exception e) {
-                /* UserNotFoundExceptionï¿½Ì³ï¿½ PasswordMismatchException ï¿½ß»ï¿½ ï¿½ï¿½
-                 * ï¿½Ù½ï¿½ login formï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
-                 */
-            	//System.out.println(userId + " / " + password);
                 request.setAttribute("loginFailed", true);
-                request.setAttribute("exception", e);
+                request.setAttribute("exception", new IllegalStateException("°¡ÀÔÇÏÁö ¾ÊÀº ¾ÆÀÌµðÀÌ°Å³ª, Àß¸øµÈ ºñ¹Ð¹øÈ£ÀÔ´Ï´Ù."));
                 System.out.print("falied");
                 return "/user/loginForm.jsp";           
             }   

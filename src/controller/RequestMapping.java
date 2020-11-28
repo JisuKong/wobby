@@ -6,36 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.user.*;
-import controller.alarm.DeleteAlarmController;
-import controller.alarm.ListAlarmController;
-import controller.board.CreatePostController;
-import controller.board.DeletePostController;
-import controller.board.ListPostController;
-import controller.board.UpdatePostController;
-import controller.board.ViewPostController;
-import controller.board.ViewPostbyAdminController;
-import controller.club.CreateClubController;
-import controller.club.DeleteClubController;
-import controller.club.ListClubController;
-import controller.club.ListTopClubController;
-import controller.club.OutClubController;
-import controller.club.RegisterClubController;
-import controller.club.UpdateClubController;
-import controller.club.ViewClubHomeController;
-import controller.club.ViewClubbyAdminController;
-import controller.matching_searching.MatchingController;
-import controller.matching_searching.SearchController;
-import controller.message.DeleteMessageController;
-import controller.message.ListReceivedMessageController;
-import controller.message.ListSentMessageController;
-import controller.message.SendMessageController;
-import controller.scrap.DeleteScrapController;
-import controller.scrap.ListScrapController;
+import controller.alarm.*;
+import controller.board.*;
+import controller.club.*;
+import controller.matching_searching.*;
+import controller.message.*;
+import controller.scrap.*;
 
 public class RequestMapping {
     private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
     
-    // �� ��û uri�� ���� controller ��ü�� ������ HashMap ����
     private Map<String, Controller> mappings = new HashMap<String, Controller>();
 
     public void initMapping() {
@@ -43,8 +23,10 @@ public class RequestMapping {
         mappings.put("/home", new ForwardController("/user/wobbyHome.jsp"));
         mappings.put("/user/login/form", new ForwardController("/user/loginForm.jsp"));
         mappings.put("/user/login", new LoginController());
-        /*mappings.put("/user/logout", new LogoutController());
-        mappings.put("/user/register/form", new ForwardController("/user/registerForm.jsp"));
+        mappings.put("/user/logout", new LogoutController());
+        mappings.put("/user/findUserInfo", new FindUserInfoController());
+        mappings.put("/user/updatePw", new UpdatePwController());
+        /*mappings.put("/user/register/form", new ForwardController("/user/registerForm.jsp"));
         mappings.put("/user/register", new RegisterUserController());
         mappings.put("/user/update", new UpdateClubController());
         mappings.put("/user/updateForm", new UpdateClubController());
@@ -102,7 +84,6 @@ public class RequestMapping {
     }
 
     public Controller findController(String uri) {	
-    	// �־��� uri�� �����Ǵ� controller ��ü�� ã�� ��ȯ
         return mappings.get(uri);
     }
 }

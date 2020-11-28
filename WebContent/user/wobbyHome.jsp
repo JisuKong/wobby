@@ -37,7 +37,7 @@
 						href="WobbyHome.jsp">Home<span class="sr-only">(current)</span>
 					</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="user/loginForm.jsp">Login</a></li>
+						href="<c:url value='/user/login/form'/>">Login</a></li>
 				</ul>
 			</div>
 		</div>
@@ -62,7 +62,7 @@
 		<header class="jumbotron my-4">
 			<h6>여성들을 위한 취미 공유 플랫폼</h6>
 			<h1 class="display-3">WOBBY</h1>
-			<a href="login.jsp" class="btn btn-primary btn-lg">로그인</a> <a
+			<a href="<c:url value='/user/login/form'/>" class="btn btn-primary btn-lg">로그인</a> <a
 				href="SignUp.jsp" class="btn btn-primary btn-lg">가입하기</a>
 		</header>
 	</div>

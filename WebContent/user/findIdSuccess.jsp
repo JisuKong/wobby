@@ -16,46 +16,22 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 	<!-- for Icon -->
 	<script src="https://kit.fontawesome.com/cfb4151af4.js"	crossorigin="anonymous"></script>
-	<title>아이디 찾기</title>
+	<title>아이디 확인</title>
 </head>
 <body>
     <div class="col-xs-6 col-sm-4 py-5 container">
     	<div class="pb-5">
       		<form class="form-signin">
-        	<h2 class="pb-2 text-center form-signin-heading">아이디 찾기</h2>
-        	<i class="fab fa-diaspora"></i><b> 아이디 찾기</b>
-        	<div class="py-2">
-        		<div class="pb-2">
-				<label for="inputName">이름</label> <input type="text"
-						class="form-control" id="inputName" placeholder=""></div>
-				<div><label for="InputEmail">이메일 주소</label> <input type="email"
-						class="form-control" id="InputEmail"
-					placeholder="example@example.com"></div>
-			</div>
-			</form>
-			<div>
-        	<button class="btn btn-lg btn-primary btn-block"
-        		onclick="location.href='FindIdSuccess.jsp'">아이디 찾기</button>
+        	<h2 class="pb-5 text-center form-signin-heading">아이디 찾기</h2>
+        	<div class="py-5">
+        	당신의 아이디입니다.
+        	<h2 class="pt-2 pb-3 text-center form-signin-heading">
+        		<p class="text-primary">${userId}</p></h2>
         	</div>
-		</div>
-      <div class="pb-5">
-      		<form class="form-signin">
-        	<i class="fab fa-diaspora"></i><b> 비밀번호 찾기</b>
-        	<div class="py-2">
-        		<div class="pb-2">
-        		<label for="InputId">ID</label> <input type="text"
-						class="form-control" id="inputId" placeholder=""></div>
-        		<div class="pb-2">
-        		<label for="inputName">이름</label> <input type="text"
-						class="form-control" id="inputName" placeholder=""></div>
-				<div><label for="InputEmail">이메일 주소</label> <input type="email"
-						class="form-control" id="InputEmail"
-					placeholder="example@example.com"></div>
-			</div>
 			</form>
-			<div>
-        	<button class="btn btn-lg btn-info btn-block"
-        		onclick="location.href='FindPwSuccess.jsp';">비밀번호 찾기</button>
+        	<div>
+        	<a class="btn btn-lg btn-primary btn-block"
+        		href="<c:url value='/user/login/form'/>">로그인하기</a>
         	</div>
 		</div>
     </div>
